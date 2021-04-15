@@ -7,10 +7,11 @@ app = Flask(__name__)
 def login():
 
     if request.method == 'POST':
-        temp =request.form.get("")
-        return "%s" %str(temp)
-    else:
-        return str(temp)
+        f = open ('salida.txt','wb')
+        f.write(request.form.get(""))
+        f.close()
+        return 200
+    
 
 
 if __name__ == '__main__':
