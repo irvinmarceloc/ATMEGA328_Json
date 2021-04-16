@@ -15,25 +15,24 @@ server.listen(3000, () => {
 
 //Serial Comunication
 const Serialport = require('serialport');
-const { isObject } = require('util');
 const Readline = Serialport.parsers.Readline;
 
 const port = new Serialport('/dev/ttyACM0',{
     baudRate: 9600
 });
 
-const parser = port.pipe(new Readline({delimeter: '\n\r\\'}));
+const parser = port.pipe(new Readline({delimeter: '\r\n'}));
 
 parser.on('open',function(data) {
-    console.log('conection is opened')
-    server.emit(data)
+    console.log('conection is opened');
 });
 
 parser.on('data',function(data) {
-    console.log(data);
-    io.emit ('tweet', data) ;
+    temp = parseInt(data, 10)+ ' ºC';
+    console.log(temp);
+    io.emit('temp', data) ;
 });
 
 port.on('error', function(err){
     console.log(err)
-})
+});
