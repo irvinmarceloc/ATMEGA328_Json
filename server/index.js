@@ -28,11 +28,17 @@ parser.on('open',function(data) {
 });
 
 parser.on('data',function(data) {
-    temp = parseInt(data, 10)+ ' ºC';
+    temp =  String(data);
     console.log(temp);
     io.emit('temp', data) ;
+
+    app.get('/work', (req, res) => {
+        res.send(temp);
+    });
 });
 
 port.on('error', function(err){
     console.log(err)
 });
+
+
